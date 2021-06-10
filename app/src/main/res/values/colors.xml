@@ -7,10 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="home">#FFFFFFFF</color>
-    <color name="youtube">#F11212</color>
-    <color name="facebook">#1F58CD</color>
-    <color name="instagram">#9B1EC8</color>
+    <color name="youtube">#FF0000</color>
+    <color name="facebook">#4267B2</color>
+    <color name="instagram">#8a3ab9</color>
     <color name="download">#CFAF36</color>
 </resources>
