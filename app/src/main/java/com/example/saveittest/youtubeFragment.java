@@ -75,9 +75,9 @@ public class youtubeFragment extends Fragment {
                     title1 = title1.replace("#","");
                     request.setTitle(title1);        //set name for video file
                     if (extens == ".mp4") {
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "SaveIT Downloads/Video/" + title1 + extens);//Destination of video file
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "EZ SAVE/Video/" + title1 + extens);//Destination of video file
                     } else if (extens == ".mp3") {
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "SaveIT Downloads/Audio/" + title1 + extens);//Destination of audio file
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "EZ SAVE/Audio/" + title1 + extens);//Destination of audio file
                     }
                     DownloadManager downloadManager; //Return the handle to a system-level service by name
                     downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
@@ -131,6 +131,7 @@ public class youtubeFragment extends Fragment {
                 values = editText.getText().toString();
 
                 DownloadMyVideo(values, tag, ext);
+
             }
         });
 //        mgr= (DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);

@@ -1,64 +1,102 @@
 package com.example.saveittest;
 
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link facebookFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.saveittest.FacebookAPI.FacebookExtractor;
+import com.example.saveittest.FacebookAPI.FacebookFile;
+
+
 public class facebookFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    EditText url;
+    Button download;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private void downloadFacebookVideo(String url, String name){
 
-    public facebookFragment() {
-        // Required empty public constructor
+        Uri downloadUri = Uri.parse(url);
+        DownloadManager.Request req = new DownloadManager.Request(downloadUri);
+        req.setTitle(name);
+        req.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS , "EZ SAVE/Video/" + name + ".mp4");
+        req.setMimeType("*/*");
+        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        downloadManager.enqueue(req);
+        Toast.makeText(getContext(), "Download Started", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment facebookFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static facebookFragment newInstance(String param1, String param2) {
-        facebookFragment fragment = new facebookFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_facebook, container, false);
+        View view = inflater.inflate(R.layout.fragment_facebook, container, false);
+        url= view.findViewById(R.id.link1);
+        download= view.findViewById(R.id.download1);
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(), "Processing Request Please Wait...", Toast.LENGTH_SHORT).show();
+                String videoURL = url.getText().toString();
+                Boolean bool = false;
+
+
+                new FacebookExtractor(getContext(),videoURL,true)
+                {
+                    @Override
+                    protected void onExtractionComplete(FacebookFile facebookFile) {
+
+                        String downURL = facebookFile.getHdUrl();
+                        downURL = downURL.replace(".fccu19-1.fna.","-lhr8-2.xx.");
+                        downURL = downURL.replace("&amp;","&");
+                        String fileName = facebookFile.getFilename();
+                        if(fileName.contains("Facebook Watch"))
+                        {
+                            fileName=fileName.replace("Facebook Watch-&x98f; ","Facebook_Shorts_");
+                        }
+                        Log.e("FileName","F:"+fileName);
+                        downloadFacebookVideo(downURL,fileName);
+                    }
+
+                    @Override
+                    protected void onExtractionFail(Exception error) {
+                        Log.e("Error","Error :: "+error.getMessage());
+                        Toast.makeText(getContext(), "Extraction Failed:"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                    }
+
+                    @Override
+                    protected void onExtractionFail(String Error) {
+                    }
+
+                };
+
+            }
+        });
+
+        return view;
     }
 }
