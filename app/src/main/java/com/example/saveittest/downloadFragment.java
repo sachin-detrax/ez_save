@@ -64,7 +64,7 @@ public class downloadFragment extends Fragment {
                 String fileName = (String) listView.getItemAtPosition(position);
                 Intent intentShare = new Intent(Intent.ACTION_SEND);
                 intentShare.setType("video/*");
-                intentShare.putExtra(Intent.EXTRA_STREAM, Uri.parse("/storage/emulated/0/"+ Environment.DIRECTORY_DOWNLOADS+"/SaveIT Downloads/Video/"+fileName+".mp4"));  //"file://"+
+                intentShare.putExtra(Intent.EXTRA_STREAM, Uri.parse("/storage/emulated/0/"+ Environment.DIRECTORY_DOWNLOADS+"/EZ SAVE/Video/"+fileName+".mp4"));  //"file://"+
                 startActivity(Intent.createChooser(intentShare,"Sharing file"));
             }
         });
