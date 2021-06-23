@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,8 +71,13 @@ public class instagramFragment extends Fragment {
                              Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.fragment_instagram, container, false);
         url=view.findViewById(R.id.link2);
+
         download = view.findViewById(R.id.download2);
         download.setOnClickListener(new View.OnClickListener() {
+
+
+
+
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {

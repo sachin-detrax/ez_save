@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .check();
+        
         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer,new youtubeFragment()).commit();
         bottomNavigationView= findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

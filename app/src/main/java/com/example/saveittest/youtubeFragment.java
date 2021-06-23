@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.StyleableRes;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -21,7 +22,11 @@ import android.widget.Toast;
 
 import java.io.File;
 
+
+
+
 //yt
+
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
@@ -91,6 +96,9 @@ public class youtubeFragment extends Fragment {
                     downloadManager.enqueue(request);   //Enqueues Download in device
 
                     Toast.makeText(getContext(), "Downloading Started", Toast.LENGTH_SHORT).show(); //show download started popup
+
+
+
                 } else {
                     Toast.makeText(getContext(), ytFiles + "yTfiles : Null , API error!!", Toast.LENGTH_SHORT).show();
                 }
@@ -112,22 +120,30 @@ public class youtubeFragment extends Fragment {
         rad_audio = view.findViewById(R.id.rad_audio);
         download = view.findViewById(R.id.download);
 
+
+
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!rad_720.isChecked() && !rad_480.isChecked() && !rad_360.isChecked() && !rad_audio.isChecked()){
+
+                    Toast.makeText(getContext(), "please select a resolution", Toast.LENGTH_SHORT).show();
+
+                }
                 if (rad_720.isChecked()) {
-                    tag = 22;
+                    tag = 136;
                     ext = ".mp4";
                 } else if (rad_480.isChecked()) {
                     tag = 135;
                     ext = ".mp4";
                 } else if (rad_360.isChecked()) {
-                    tag = 18;
+                    tag = 134;
                     ext = ".mp4";
                 } else if (rad_audio.isChecked()) {
-                    tag = 251;
+                    tag = 171;
                     ext = ".mp3";
                 }
+
                 values = editText.getText().toString();
 
                 DownloadMyVideo(values, tag, ext);
